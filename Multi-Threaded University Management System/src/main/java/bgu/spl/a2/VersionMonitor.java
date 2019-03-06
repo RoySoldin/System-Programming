@@ -1,5 +1,7 @@
 package bgu.spl.a2;
 
+
+
 /**
  * Describes a monitor that supports the concept of versioning - its idea is
  * simple, the monitor has a version number which you can receive via the method
@@ -17,19 +19,24 @@ package bgu.spl.a2;
  * methods
  */
 public class VersionMonitor {
-
-    public int getVersion() {
-        //TODO: replace method body with real implementation
-        throw new UnsupportedOperationException("Not Implemented Yet.");
+    
+    //Fields
+    int version = 0;
+    
+    //Methods
+    public  int getVersion() {return version;}
+    
+    //this method is synchronized because it calls notifyAll
+    public synchronized void inc()
+    {
+        version++;
+        notifyAll();
     }
-
-    public void inc() {
-        //TODO: replace method body with real implementation
-        throw new UnsupportedOperationException("Not Implemented Yet.");
-    }
-
-    public void await(int version) throws InterruptedException {
-        //TODO: replace method body with real implementation
-        throw new UnsupportedOperationException("Not Implemented Yet.");
+    
+    //this method is synchronized because it calls wait
+    public synchronized void await(int version) throws InterruptedException
+    {
+        while(version == getVersion())
+            wait();
     }
 }

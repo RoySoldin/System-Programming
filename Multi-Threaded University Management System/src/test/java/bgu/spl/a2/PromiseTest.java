@@ -64,6 +64,7 @@ public class PromiseTest {
         }
 
 
+
     }
 
     @Test
@@ -73,15 +74,9 @@ public class PromiseTest {
         int[] beforeResolve = {0, 0, 0};
         int[] shouldBe = {1, 1, 1};
         try {
-            callback incFirst = () -> {
-                beforeResolve[0]++;
-            };
-            callback incSecond = () -> {
-                beforeResolve[1]++;
-            };
-            callback incThird = () -> {
-                beforeResolve[2]++;
-            };
+            callback incFirst = () -> { beforeResolve[0]++; };
+            callback incSecond = () -> { beforeResolve[1]++; };
+            callback incThird = () -> { beforeResolve[2]++; };
 
             prom.subscribe(incFirst);
             prom.subscribe(incSecond);
@@ -93,9 +88,7 @@ public class PromiseTest {
         }
         assertArrayEquals("Subscribed callbacks didn't work", beforeResolve, shouldBe);
 
-        try {
-            prom.resolve(10);
-        } catch (IllegalStateException e) {
+        try { prom.resolve(10); } catch (IllegalStateException e) {
             Assert.fail("this object is already resolved");
         }
 
